@@ -1,0 +1,69 @@
+1.0	Introduction
+In response to the COVID-19 pandemic, public health organizations have faced immense challenges in predicting the spread of the virus and understanding key factors that influence transmission and patient outcomes.There is an urgent need for data scientists to provide actionable insights to inform policies, anticipate future outbreaks, and improve health resource allocation.
+
+1.2	Objectives
+This project aims to utilize historical COVID-19 data to conduct data cleaning, perform exploratory data analysis (EDA), and develop predictive models to forecast COVID-19 trends. Report of the findings will be presented through visualizations, also recommendations for public health intervention will be provided based on the results from the data modelling and prediction.
+
+1.3	Dataset Methodology
+Covid19 dataset was extracted on Kaggle and it includes case counts, demographic data and various health metrics. Data was loaded to the jupyter notebook environment using the read_csv method. The data consist of 49068 rows and 10 columns, and have features characters like object, integer, and float data type.
+
+1.4	Data Preparation and Manipulation
+Exploratory Data Analysis (EDA) - The dataset was explored in order to gain understanding of the data structure which helps to inform data cleaning methods. Some data cleaning techniques used to profile and clean anomalies in the data  (e.g missing values, deleting columns not directly relevant to the findings), includes methods like shape, info, describe, drop, isnull to mention a few. Drop method only affects Province/State which is the only column with null values, however Country/Region/WHO Region/Lat/Long  will serve similar purposes i.e demographic factors. 
+
+Data Manipulation - Daily growth rate, Total population, Mortality rate are columns derived from existing columns. This helps enrich the data and strengthen model insights.
+
+Date Format and Location Standardization -  Date column was converted to date_time format using pandas, month and day separated respectively while the Date was set as the data index in order to allow scalability in data modelling. Also, Lat and Long were combined to derive Coordinates. 
+
+Statistical summary - e.g sum, mean  carried out to evaluate the total number of cases per population as well as average mortality rate per month.
+
+Visualization - Distributions of key variables (bar, scattered, pie charts).
+
+Key Insights - Top 3 regions with highest cases are America, Europe, Eastern Mediterranean with 48.6%, 30.0%, 8.7% percentage respectively.  Mortality rate increases in May with 1.816246 average rate. More Confirmed cases are usually reported on Monday.
+
+Tools and Technologies - Python Libraries e.g Pandas, Matplotlib, Seaborn, Numpy
+
+2.0 	Model Development
+2.1	Model Selection
+RandomForestClassifier and MultiOutputClassifier are two machine learning models selected for the case scenario. RandomForestClassifier is designed for classification tasks where the target variable consists of discrete categories or labels (e.g., 0 or 1, or class names) just in this case scenario. 
+
+Modeling Process - first, object labels in the dataset were encoded using the LabelEncoder library. e.g Country, WHO Region, Month, Day. Next, data was splitted into X(i.e Country, WHO Region, Lat, Long etc) and y( i.e Daily Growth Rate, Mortality rate)  Features using the train_test_split library from SciKitLearn. 
+
+Challenges - some Features like Deaths, Recovered, Active, Mortality rate appear to have continuous numerical values, which is incompatible with classification models. Hence, lamba function was used to tackle this challenge by binarizing target columns based on median values.
+
+3.0	Model Performance/Evaluation
+3.1	Models and Performance:
+Target Variable: Daily Growth Rate - Achieved an accuracy of 99.11%, suggests the model is highly effective at predicting the rate of daily case growth based on input features.
+
+Target Variable: Mortality Rate -Achieved an accuracy of 99.55%, demonstrates exceptional performance in estimating the mortality rate.
+
+3.1	Evaluation Metrics
+Accuracy_score, classification_report used for evaluating model accuracy. Classification report for the first target variable i.e Daily Growth Rate was scored at 0.9910590605717164 while second target variable i.e Mortality rate was scored 0.9954665659236872. 
+3.2	Evaluation Analysis
+An accuracy score of 0.9954665659236872 (approximately 99.55%) indicates that the model correctly classified 99.55% of the total instances in the dataset. The model is performing exceptionally well, with only around 0.45% misclassification.
+Visualizations - Graphs showing metric trends (e.g., accuracy vs. epochs).
+
+3.3 	Tools and Technologies - 
+Python Libraries e.g Numpy, SciKitLearn, matplotlib.pyplot
+
+3.4	Key Insights 
+Geographic Information (Latitude and Longitude) - These features likely reflect regional trends in COVID-19 spread and resource availability.
+Deaths - Strongly correlated with both target variables as it directly impacts growth and mortality rates.
+Total Population - Larger populations are more prone to higher case counts and potentially varying mortality rates.
+Categorical Variables (Country, Day, Month, WHO Region) - Encoding these variables allows the model to identify temporal and regional patterns, capturing the pandemic’s global variability.
+
+3.4.1	Implications of High Accuracy
+Daily Growth Rate (99.11% Accuracy) - The model’s ability to forecast case growth can inform public health organizations about the urgency and extent of interventions, such as lockdowns, social distancing, or vaccination campaigns.
+Mortality Rate (99.55% Accuracy) - Precise predictions can guide healthcare resource allocation, including hospital beds, ventilators, and medical staff, especially in regions with higher expected mortality rates.
+
+3.5	Recommendations for Public Health
+Policy Formulation - Use daily growth rate predictions to preemptively impose restrictions in areas with high projected case growth. Identify regions with high mortality rates for targeted healthcare interventions and vaccination drives.
+Resource Allocation - Align resource distribution, such as medical supplies and hospital staffing, with areas predicted to experience high growth or mortality rates.
+Public Awareness - Utilize model outputs to communicate data-driven insights to the public, fostering compliance with health guidelines.
+
+3.6	Model Limitations
+Data Quality and Availability - The accuracy heavily depends on the completeness and accuracy of historical COVID-19 data.
+Generalization - High accuracy may not always translate to real-world settings, especially in regions with unique conditions or sparse data.
+Feature Selection - Other potential predictors, such as healthcare infrastructure or social mobility, may further enhance predictions.
+
+3.7	Conclusion
+The modeling system demonstrates exceptional accuracy, showcasing its potential to inform public health strategies effectively. By integrating these predictions into policy and resource planning, the report findings can play a vital role in mitigating the pandemic’s impact and preparing for future public health challenges.
